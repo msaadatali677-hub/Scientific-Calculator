@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CodeWithSaadat | Scientific Calculator & Unit Converter</title>
+<meta name="description" content="A premium scientific calculator and unit converter built by CodeWithSaadat.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ TOAST NOTIFICATION CONTAINER ============ -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-tag">&lt;/&gt;</span>
+        <div class="brand-text">
+          <span class="brand-name">CodeWithSaadat</span>
+          <span class="brand-sub">Scientific Calculator</span>
+        </div>
+      </div>
+
+      <nav class="main-nav" id="mainNav">
+        <button class="nav-btn active" data-tab="calculator">Calculator</button>
+        <button class="nav-btn" data-tab="converter">Converter</button>
+        <button class="nav-btn" data-tab="history">History</button>
+        <button class="nav-btn" data-tab="about">About</button>
+      </nav>
+
+      <div class="header-actions">
+        <button id="themeToggle" class="icon-btn" title="Toggle theme" aria-label="Toggle light and dark theme">
+          <span id="themeIcon">🌙</span>
+        </button>
+        <button id="fullscreenToggle" class="icon-btn" title="Fullscreen mode" aria-label="Toggle fullscreen">⛶</button>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile nav drawer -->
+    <nav class="mobile-nav" id="mobileNav">
+      <button class="nav-btn active" data-tab="calculator">Calculator</button>
+      <button class="nav-btn" data-tab="converter">Converter</button>
+      <button class="nav-btn" data-tab="history">History</button>
+      <button class="nav-btn" data-tab="about">About</button>
+    </nav>
+  </header>
+
+  <p class="tagline">Powerful Calculator &amp; Unit Converter</p>
+
+  <main class="app-main">
+
+    <!-- ======================================================
+         TAB 1: CALCULATOR
+    ======================================================= -->
+    <section class="tab-panel active" id="tab-calculator">
+      <div class="calc-layout">
+
+        <!-- Calculator Card -->
+        <div class="calculator-card glass">
+
+          <!-- Mode row: DEG/RAD/GRAD + memory indicator -->
+          <div class="calc-modes">
+            <div class="angle-modes" role="group" aria-label="Angle unit">
+              <button class="mode-btn active" data-mode="DEG">DEG</button>
+              <button class="mode-btn" data-mode="RAD">RAD</button>
+              <button class="mode-btn" data-mode="GRAD">GRAD</button>
+            </div>
+            <span class="memory-indicator" id="memoryIndicator" title="Memory has a stored value">M</span>
+          </div>
+
+          <!-- Display -->
+          <div class="display-wrap">
+            <div class="expression-line" id="expressionLine">&nbsp;</div>
+            <div class="result-row">
+              <div class="result-line" id="resultLine">0</div>
+              <button class="copy-btn" id="copyResultBtn" title="Copy result">⧉</button>
+            </div>
+          </div>
+
+          <!-- Memory row -->
+          <div class="btn-grid memory-grid">
+            <button class="btn btn-mem" data-action="mc">MC</button>
+            <button class="btn btn-mem" data-action="mr">MR</button>
+            <button class="btn btn-mem" data-action="m-plus">M+</button>
+            <button class="btn btn-mem" data-action="m-minus">M-</button>
+            <button class="btn btn-mem" data-action="ms">MS</button>
+          </div>
+
+          <!-- Scientific function panel (collapsible on mobile) -->
+          <div class="sci-panel" id="sciPanel">
+            <div class="btn-grid sci-grid">
+              <button class="btn btn-sci" data-func="sin">sin</button>
+              <button class="btn btn-sci" data-func="cos">cos</button>
+              <button class="btn btn-sci" data-func="tan">tan</button>
+              <button class="btn btn-sci" data-func="cot">cot</button>
+              <button class="btn btn-sci" data-func="sec">sec</button>
+
+              <button class="btn btn-sci" data-func="asin">asin</button>
+              <button class="btn btn-sci" data-func="acos">acos</button>
+              <button class="btn btn-sci" data-func="atan">atan</button>
+              <button class="btn btn-sci" data-func="csc">csc</button>
+              <button class="btn btn-sci" data-func="fact">x!</button>
+
+              <button class="btn btn-sci" data-func="sinh">sinh</button>
+              <button class="btn btn-sci" data-func="cosh">cosh</button>
+              <button class="btn btn-sci" data-func="tanh">tanh</button>
+              <button class="btn btn-sci" data-func="abs">|x|</button>
+              <button class="btn btn-sci" data-func="mod">mod</button>
+
+              <button class="btn btn-sci" data-func="log">log</button>
+              <button class="btn btn-sci" data-func="ln">ln</button>
+              <button class="btn btn-sci" data-func="sqrt">√</button>
+              <button class="btn btn-sci" data-func="cbrt">∛</button>
+              <button class="btn btn-sci" data-func="reciprocal">1/x</button>
+
+              <button class="btn btn-sci" data-func="square">x²</button>
+              <button class="btn btn-sci" data-func="cube">x³</button>
+              <button class="btn btn-sci" data-insert="^">xʸ</button>
+              <button class="btn btn-sci" data-func="pi">π</button>
+              <button class="btn btn-sci" data-func="e">e</button>
+
+              <button class="btn btn-sci" data-func="phi">φ</button>
+              <button class="btn btn-sci" data-func="rand">Rnd</button>
+              <button class="btn btn-sci" data-insert="(">(</button>
+              <button class="btn btn-sci" data-insert=")">)</button>
+              <button class="btn btn-func" data-action="toggle-sci">▲</button>
+            </div>
+          </div>
+
+          <!-- Standard grid: numbers + basic ops -->
+          <div class="btn-grid main-grid">
+            <button class="btn btn-func" data-action="clear">AC</button>
+            <button class="btn btn-func" data-action="backspace">⌫</button>
+            <button class="btn btn-func" data-func="percent">%</button>
+            <button class="btn btn-op" data-insert="/">÷</button>
+
+            <button class="btn btn-num" data-num="7">7</button>
+            <button class="btn btn-num" data-num="8">8</button>
+            <button class="btn btn-num" data-num="9">9</button>
+            <button class="btn btn-op" data-insert="*">×</button>
+
+            <button class="btn btn-num" data-num="4">4</button>
+            <button class="btn btn-num" data-num="5">5</button>
+            <button class="btn btn-num" data-num="6">6</button>
+            <button class="btn btn-op" data-insert="-">−</button>
+
+            <button class="btn btn-num" data-num="1">1</button>
+            <button class="btn btn-num" data-num="2">2</button>
+            <button class="btn btn-num" data-num="3">3</button>
+            <button class="btn btn-op" data-insert="+">+</button>
+
+            <button class="btn btn-func" data-action="toggle-sign">+/−</button>
+            <button class="btn btn-num" data-num="0">0</button>
+            <button class="btn btn-num" data-num=".">.</button>
+            <button class="btn btn-equals" data-action="equals">=</button>
+          </div>
+        </div>
+
+        <!-- Side history panel (desktop) -->
+        <aside class="side-history glass" id="sideHistory">
+          <div class="side-history-head">
+            <h3>History</h3>
+            <button class="text-btn" id="sideClearHistory">Clear</button>
+          </div>
+          <ul class="history-list" id="sideHistoryList"></ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TAB 2: CONVERTER
+    ======================================================= -->
+    <section class="tab-panel" id="tab-converter">
+      <div class="converter-card glass">
+
+        <div class="category-tabs" id="categoryTabs">
+          <button class="cat-btn active" data-category="currency">Currency</button>
+          <button class="cat-btn" data-category="length">Length</button>
+          <button class="cat-btn" data-category="area">Area</button>
+          <button class="cat-btn" data-category="volume">Volume</button>
+          <button class="cat-btn" data-category="weight">Weight</button>
+          <button class="cat-btn" data-category="temperature">Temperature</button>
+          <button class="cat-btn" data-category="speed">Speed</button>
+          <button class="cat-btn" data-category="pressure">Pressure</button>
+          <button class="cat-btn" data-category="power">Power</button>
+          <button class="cat-btn" data-category="numsys">Number System</button>
+        </div>
+
+        <!-- Generic converter (length/area/volume/weight/temp/speed/pressure/power) -->
+        <div class="converter-panel" id="genericConverter">
+          <div class="conv-row">
+            <div class="conv-field">
+              <label for="fromValue">From</label>
+              <input type="number" id="fromValue" placeholder="Enter value" value="1">
+              <select id="fromUnit"></select>
+            </div>
+
+            <button class="swap-btn" id="swapUnitsBtn" title="Swap units">⇄</button>
+
+            <div class="conv-field">
+              <label for="toValue">To</label>
+              <input type="number" id="toValue" placeholder="Result" readonly>
+              <select id="toUnit"></select>
+            </div>
+          </div>
+          <p class="conv-note" id="genericNote"></p>
+        </div>
+
+        <!-- Currency converter -->
+        <div class="converter-panel" id="currencyConverter" style="display:none;">
+          <div class="conv-row">
+            <div class="conv-field">
+              <label for="currencyAmount">Amount</label>
+              <input type="number" id="currencyAmount" placeholder="Enter amount" value="1">
+              <select id="currencyFrom"></select>
+            </div>
+
+            <button class="swap-btn" id="swapCurrencyBtn" title="Swap currencies">⇄</button>
+
+            <div class="conv-field">
+              <label for="currencyResult">Converted</label>
+              <input type="text" id="currencyResult" placeholder="Result" readonly>
+              <select id="currencyTo"></select>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="convertCurrencyBtn">Convert</button>
+
+          <div class="currency-meta">
+            <p id="currencyRateInfo">Exchange rate: —</p>
+            <p id="currencyUpdatedInfo">Last updated: —</p>
+            <p class="currency-disclaimer">
+              Live rates are not built in yet. Connect a real exchange-rate API in the
+              <code>CURRENCY_API_CONFIG</code> section of <code>script.js</code> to enable live conversion.
+            </p>
+          </div>
+        </div>
+
+        <!-- Number system converter -->
+        <div class="converter-panel" id="numsysConverter" style="display:none;">
+          <div class="numsys-grid">
+            <div class="numsys-field">
+              <label for="binInput">Binary</label>
+              <input type="text" id="binInput" data-base="2" placeholder="e.g. 11111111">
+            </div>
+            <div class="numsys-field">
+              <label for="decInput">Decimal</label>
+              <input type="text" id="decInput" data-base="10" placeholder="e.g. 255">
+            </div>
+            <div class="numsys-field">
+              <label for="octInput">Octal</label>
+              <input type="text" id="octInput" data-base="8" placeholder="e.g. 377">
+            </div>
+            <div class="numsys-field">
+              <label for="hexInput">Hexadecimal</label>
+              <input type="text" id="hexInput" data-base="16" placeholder="e.g. FF">
+            </div>
+          </div>
+          <p class="conv-note" id="numsysNote">Type a value into any field — the others update automatically.</p>
+
+          <div class="binary-arithmetic">
+            <h4>Binary Arithmetic</h4>
+            <div class="binary-arith-row">
+              <input type="text" id="binA" placeholder="Binary A e.g. 1010">
+              <select id="binOp">
+                <option value="add">+</option>
+                <option value="sub">−</option>
+                <option value="mul">×</option>
+                <option value="and">AND</option>
+                <option value="or">OR</option>
+                <option value="xor">XOR</option>
+              </select>
+              <input type="text" id="binB" placeholder="Binary B e.g. 0110">
+              <button class="btn-primary" id="binCalcBtn">=</button>
+            </div>
+            <p class="conv-note" id="binArithResult"></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TAB 3: HISTORY
+    ======================================================= -->
+    <section class="tab-panel" id="tab-history">
+      <div class="history-card glass">
+        <div class="history-card-head">
+          <h2>Calculation History</h2>
+          <button class="btn-primary danger" id="clearAllHistoryBtn">Clear All History</button>
+        </div>
+        <ul class="history-list full" id="fullHistoryList"></ul>
+        <p class="empty-state" id="historyEmptyState">No calculations yet. Start using the calculator to build your history.</p>
+      </div>
+    </section>
+
+    <!-- ======================================================
+         TAB 4: ABOUT
+    ======================================================= -->
+    <section class="tab-panel" id="tab-about">
+      <div class="about-card glass">
+        <h2>&lt;/&gt; CodeWithSaadat</h2>
+        <p>
+          <strong>CodeWithSaadat Scientific Calculator &amp; Unit Converter</strong> is a
+          production-quality, dependency-free web application built with plain HTML5, CSS3,
+          and vanilla JavaScript. No frameworks, no build tools — just fast, clean, readable code.
+        </p>
+
+        <h3>Features</h3>
+        <ul class="about-list">
+          <li>Full scientific calculator with DEG / RAD / GRAD modes</li>
+          <li>Memory functions (MC, MR, M+, M-, MS)</li>
+          <li>Persistent calculation history saved in your browser</li>
+          <li>Ten unit converter categories, including a full number-system converter</li>
+          <li>Currency converter UI ready for a live exchange-rate API</li>
+          <li>Dark and light themes, keyboard shortcuts, and full mobile support</li>
+        </ul>
+
+        <h3>Keyboard Shortcuts</h3>
+        <ul class="about-list">
+          <li><kbd>0-9</kbd> Numbers</li>
+          <li><kbd>+ - * /</kbd> Operators</li>
+          <li><kbd>Enter</kbd> or <kbd>=</kbd> Calculate</li>
+          <li><kbd>Backspace</kbd> Delete last character</li>
+          <li><kbd>Esc</kbd> Clear</li>
+          <li><kbd>(</kbd> <kbd>)</kbd> Parentheses</li>
+        </ul>
+
+        <h3>Data &amp; Privacy</h3>
+        <p>
+          History and preferences are stored only in your browser's local storage.
+          Nothing is sent to any server.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 CodeWithSaadat — Scientific Calculator &amp; Unit Converter</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
