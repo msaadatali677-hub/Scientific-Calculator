@@ -25,6 +25,9 @@ The project focuses on:
 
 ---
 
+## Live Demo
+https://scientific-calculator-by-saadat.netlify.app/
+
 ## 🚀 Features
 
 ### 🧮 Scientific Calculator
